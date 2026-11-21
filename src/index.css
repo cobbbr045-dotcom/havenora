@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  
+  body {
+    background-color: #F7F5EF;
+    color: #222622;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-editorial {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F5EF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #AD8B61;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8C6C43;
+}
+
+/* Subtle image zoom transition */
+.img-zoom-hover {
+  overflow: hidden;
+}
+
+.img-zoom-hover img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom-hover:hover img {
+  transform: scale(1.05);
+}
+
+/* Luxury button styling */
+.btn-luxury-primary {
+  @apply relative inline-flex items-center justify-center px-8 py-3.5 text-xs font-semibold tracking-luxury uppercase transition-all duration-300 bg-forest text-ivory hover:bg-forest-deep active:scale-95 shadow-sm hover:shadow-md;
+}
+
+.btn-luxury-secondary {
+  @apply relative inline-flex items-center justify-center px-8 py-3.5 text-xs font-semibold tracking-luxury uppercase transition-all duration-300 border border-forest/30 text-forest hover:bg-forest hover:text-ivory active:scale-95;
+}
+
+.btn-luxury-white {
+  @apply relative inline-flex items-center justify-center px-8 py-3.5 text-xs font-semibold tracking-luxury uppercase transition-all duration-300 bg-white text-forest hover:bg-ivory active:scale-95 shadow-sm hover:shadow-md;
+}
+
+.btn-luxury-outline-white {
+  @apply relative inline-flex items-center justify-center px-8 py-3.5 text-xs font-semibold tracking-luxury uppercase transition-all duration-300 border border-white/40 text-white hover:bg-white hover:text-forest active:scale-95 backdrop-blur-sm;
+}
