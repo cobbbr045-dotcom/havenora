@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowLeft, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../components/ui/Toast';
 
 export const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('anuj123457');
-  const [password, setPassword] = useState('havenora2026');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { login, demoLogin, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, isLoading: authLoading } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,10 +20,10 @@ export const LoginPage: React.FC = () => {
 
   // If already logged in, redirect
   React.useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !authLoading) {
       navigate('/owner/dashboard', { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,15 +37,9 @@ export const LoginPage: React.FC = () => {
       showToast('Welcome back, Authorized Owner', 'success');
       navigate(from, { replace: true });
     } else {
-      setError(result.error || 'Authentication failed. Please check your credentials.');
+      setError(result.error || 'Authentication failed. Please verify credentials.');
       showToast(result.error || 'Authentication failed', 'error');
     }
-  };
-
-  const handleInstantDemo = () => {
-    demoLogin();
-    showToast('Signed in with Authorized Owner Account (anuj123457)', 'success');
-    navigate('/owner/dashboard', { replace: true });
   };
 
   return (
@@ -57,7 +51,9 @@ export const LoginPage: React.FC = () => {
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Public Website</span>
         </Link>
-        <span className="text-[10px] tracking-widest uppercase text-bronze">Owner Management</span>
+        <span className="text-[10px] tracking-widest uppercase text-bronze font-semibold">
+          Security Enforced
+        </span>
       </div>
 
       {/* Main Login Card */}
@@ -75,13 +71,14 @@ export const LoginPage: React.FC = () => {
             Private Owner Portal
           </p>
           <p className="text-xs text-charcoal/60 mt-2 font-light">
-            Sign in with your authorized Access ID to manage bookings, suites, and property settings.
+            Sign in with authorized owner credentials to access the property management system.
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-600 font-medium">
-            {error}
+          <div className="mb-6 p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-600 font-medium flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+            <span>{error}</span>
           </div>
         )}
 
@@ -101,7 +98,9 @@ export const LoginPage: React.FC = () => {
               />
               <User className="w-4 h-4 text-charcoal/40 absolute left-3.5 top-3" />
             </div>
-            <p className="text-[10px] text-charcoal/50 mt-1">Authorized Owner ID: <code className="text-forest font-semibold">anuj123457</code></p>
+            <p className="text-[10px] text-charcoal/50 mt-1">
+              Authorized Owner ID: <code className="text-forest font-semibold">anuj123457</code>
+            </p>
           </div>
 
           <div>
@@ -114,7 +113,7 @@ export const LoginPage: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
+                placeholder="Enter password..."
                 className="w-full pl-10 pr-10 py-2.5 text-xs bg-ivory/60 border border-sand-dark/40 rounded-lg focus:outline-none focus:border-forest text-charcoal"
               />
               <Lock className="w-4 h-4 text-charcoal/40 absolute left-3.5 top-3" />
@@ -134,23 +133,20 @@ export const LoginPage: React.FC = () => {
             disabled={isLoading}
             className="w-full mt-2 py-3 text-xs font-semibold tracking-luxury uppercase bg-forest hover:bg-forest-deep text-ivory rounded-lg transition-all shadow-md active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {isLoading ? <span>Authenticating...</span> : <span>Sign In as Owner</span>}
+            {isLoading ? <span>Authenticating Server-Side...</span> : <span>Sign In as Owner</span>}
           </button>
         </form>
 
-        {/* Instant Demo Login Button */}
+        {/* Security Notice */}
         <div className="mt-6 pt-6 border-t border-sand-dark/20 text-center">
-          <p className="text-[11px] text-charcoal/60 mb-3">
-            Quick authorized owner access:
-          </p>
-          <button
-            type="button"
-            onClick={handleInstantDemo}
-            className="w-full py-2.5 px-4 text-xs font-semibold tracking-wider uppercase bg-sand/30 hover:bg-sand/60 text-forest border border-sand-dark/40 rounded-lg transition-colors flex items-center justify-center gap-2"
-          >
+          <div className="flex items-center justify-center gap-2 text-[11px] text-forest font-medium">
             <ShieldCheck className="w-4 h-4 text-bronze" />
-            <span>1-Click Owner Sign In (anuj123457)</span>
-          </button>
+            <span>Strict Access Control</span>
+          </div>
+          <p className="text-[10px] text-charcoal/60 mt-1 leading-relaxed">
+            Restricted to authorized owner credentials only (<code className="font-mono text-forest">anuj123457</code>).
+            Protected by Vercel Edge Middleware and rate limiting.
+          </p>
         </div>
 
       </div>
@@ -159,7 +155,7 @@ export const LoginPage: React.FC = () => {
       <div className="text-center text-xs text-ivory/40 max-w-md mx-auto">
         <p>Private Owner Portal · Anuj Digital Hospitality Platform</p>
         <p className="text-[10px] mt-1 text-ivory/30">
-          Access restricted to authorized personnel. Session state is authenticated and encrypted.
+          Protected by Vercel Edge Middleware, HTTP-only secure session cookies, and rate limiting.
         </p>
       </div>
 
