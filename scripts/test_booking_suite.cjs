@@ -164,7 +164,7 @@ function verifyOwnerAuth(username, password) {
   const cleanUser = username.trim().toLowerCase();
   const cleanPass = password.trim();
   const isValidUser = cleanUser === 'anuj123457';
-  const isValidPass = cleanPass === 'havenora2026';
+  const isValidPass = cleanPass === 'anuj103anuj';
   return isValidUser && isValidPass;
 }
 
@@ -393,7 +393,7 @@ async function runTestSuite() {
     // Simulate logout (clears session, leaves persistent data)
     localStorage.removeItem('havenora_owner_session');
     // Simulate login
-    const authOk = verifyOwnerAuth('anuj123457', 'havenora2026');
+    const authOk = verifyOwnerAuth('anuj123457', 'anuj103anuj');
     const storedAfterAuth = JSON.parse(localStorage.getItem('havenora_bookings'));
     assert('Scenario 13: Bookings persist through logout & login cycle', authOk && storedAfterAuth.length > 0, `Owner re-authenticated successfully, all ${storedAfterAuth.length} bookings intact`);
   } catch (err) {
@@ -420,8 +420,8 @@ async function runTestSuite() {
 
   // OWNER AUTHENTICATION AUDIT
   console.log('\n--- OWNER DASHBOARD AUTHENTICATION AUDIT ---');
-  assert('Owner Auth: anuj123457 with valid password', verifyOwnerAuth('anuj123457', 'havenora2026') === true, 'Username anuj123457 authenticated');
-  assert('Owner Auth: Reject wrong username', verifyOwnerAuth('wronguser', 'havenora2026') === false, 'Invalid username rejected');
+  assert('Owner Auth: anuj123457 with valid password', verifyOwnerAuth('anuj123457', 'anuj103anuj') === true, 'Username anuj123457 authenticated');
+  assert('Owner Auth: Reject wrong username', verifyOwnerAuth('wronguser', 'anuj103anuj') === false, 'Invalid username rejected');
   assert('Owner Auth: Reject wrong password', verifyOwnerAuth('anuj123457', 'wrongpass') === false, 'Invalid password rejected');
 
   console.log('\n================================================================');

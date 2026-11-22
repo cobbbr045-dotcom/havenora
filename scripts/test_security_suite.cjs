@@ -50,7 +50,7 @@ console.log('--- MODULE 1: Cryptographic Engine & Session Token Security ---');
 
 const SECURITY_CONFIG = {
   OWNER_USERNAME: process.env.OWNER_USERNAME || 'anuj123457',
-  OWNER_PASSWORD: process.env.OWNER_PASSWORD || 'havenora2026',
+  OWNER_PASSWORD: process.env.OWNER_PASSWORD || 'anuj103anuj',
   SESSION_SECRET: process.env.SESSION_SECRET || 'hv_sec_984f8a3d7b2c1e6a5f0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8',
   COOKIE_NAME: 'havenora_session',
   TOKEN_EXPIRY_SECONDS: 86400,
@@ -445,7 +445,7 @@ function searchDirectoryForRegex(dir, regex, ignoreExt = ['.png', '.jpg', '.jpeg
 }
 
 // Test 6.1: Verify password is not hardcoded in src/
-const srcPasswordLeaks = searchDirectoryForRegex(srcDir, /havenora2026/i);
+const srcPasswordLeaks = searchDirectoryForRegex(srcDir, /(anuj103anuj|havenora2026)/i);
 assert(srcPasswordLeaks.length === 0, 'No passwords or admin credentials found in src/ files', srcPasswordLeaks.join(', '));
 
 // Test 6.2: Verify secret key is not in src/
@@ -455,7 +455,7 @@ assert(srcSecretLeaks.length === 0, 'No session secrets or private HMAC keys fou
 // Test 6.3: Verify dist production bundle contains no leaked password
 let distPasswordLeaks = [];
 if (fs.existsSync(distDir)) {
-  distPasswordLeaks = searchDirectoryForRegex(distDir, /havenora2026/i);
+  distPasswordLeaks = searchDirectoryForRegex(distDir, /(anuj103anuj|havenora2026)/i);
 }
 assert(distPasswordLeaks.length === 0, 'Production dist bundle is clean of passwords and secrets', distPasswordLeaks.join(', '));
 

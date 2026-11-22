@@ -3,7 +3,7 @@ import crypto from 'crypto';
 // Configuration from Environment Variables with secure defaults
 export const SECURITY_CONFIG = {
   OWNER_USERNAME: process.env.OWNER_USERNAME || 'anuj123457',
-  OWNER_PASSWORD: process.env.OWNER_PASSWORD || 'havenora2026',
+  OWNER_PASSWORD: process.env.OWNER_PASSWORD || 'anuj103anuj',
   SESSION_SECRET: process.env.SESSION_SECRET || 'hv_sec_984f8a3d7b2c1e6a5f0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8',
   COOKIE_NAME: 'havenora_session',
   TOKEN_EXPIRY_SECONDS: 86400, // 24 hours
